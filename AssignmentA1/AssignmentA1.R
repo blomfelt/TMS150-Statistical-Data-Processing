@@ -1,4 +1,5 @@
-setwd("~/Documents/RStudio/TMS150 - Stochastic Data Processing/AssignmentA1")
+#setwd("~/Documents/RStudio/TMS150 - Stochastic Data Processing/AssignmentA1")
+setwd("~/Documents/TMS150-Statistical-Data-Processing/AssignmentA1")
 
 # Response variable y = brwt = brain weight
 # Covariate x = bwt = body weight

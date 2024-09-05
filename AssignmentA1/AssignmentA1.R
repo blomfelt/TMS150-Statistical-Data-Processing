@@ -1,0 +1,68 @@
+setwd("~/Documents/RStudio/TMS150 - Stochastic Data Processing/AssignmentA1")
+
+# Response variable y = brwt = brain weight
+# Covariate x = bwt = body weight
+
+# Exercise 1 ----
+sleeptab <- read.table('sleeptab.dat',header=TRUE) # loads the dataset
+# the option header = TRUE tells R that the first row
+# contains the variables names
+attach(sleeptab) # this way you can access the variables by name
+# Inspect the data:
+head(sleeptab)
+
+# 1.1
+#png("figures/Ex1_1.png")
+plot(bwt, brwt)
+#dev.off()
+
+# 1.2
+tooLarge <- which(brwt>1000)
+Species_of_animal[tooLarge]
+# "Africanelephant" "Asianelephant" "Man"
+brwt[tooLarge]
+# 5712 4603 1320
+
+#png("figures/Ex1_2.png")
+plot(bwt[-tooLarge], brwt[-tooLarge])
+#dev.off()
+# Very linear for the smallest values, but less so for the largest.
+# An increase in body weight does seem to increase the brain weight.
+
+# 1.3 
+# Linear fit by hand
+# x = bwt
+# y = brwt
+
+# slope b1, formula from p 5 in recaplinear.pdf
+b1 = sum((bwt-mean(bwt))*brwt) / sum((bwt-mean(bwt))^2)
+#    sum( xi - mean(x)  * yi ) / sum((xi -mean( x ))^2)
+
+# intercept b0
+b0 = mean(brwt) - b1*mean(bwt)
+#    mean( y  ) - b1*mean( x )
+
+# Linear fit by 'lm'
+sleepModel <- lm(brwt~bwt)
+summary(sleepModel)
+plot(bwt, brwt)
+abline(sleepModel)
+
+cat("Manual calc: \n", b0, b1,
+    "\nUsing ´lm´:\n", sleepModel$coefficients)
+# We get the same result when doing it manually and using the function, 
+# which is good! 
+# BUT using the function seems exponentially easier the more variables you have
+
+
+# 1.4 
+# The value b1 represent the slope, so an increase of 1 kg body weight correlate
+# with an increase of 0.97 g brwt. This means that an 100 kg increase in body
+# weight would lead, in average, to a 96 grams increase of brain weight.
+
+# Exercise 2 ----
+
+
+
+
+

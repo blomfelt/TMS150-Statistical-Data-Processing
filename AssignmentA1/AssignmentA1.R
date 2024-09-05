@@ -1,6 +1,9 @@
 #setwd("~/Documents/RStudio/TMS150 - Stochastic Data Processing/AssignmentA1")
 setwd("~/Documents/TMS150-Statistical-Data-Processing/AssignmentA1")
 
+# To save all plots change to TRUE
+savePlots <-  FALSE
+
 # Response variable y = brwt = brain weight
 # Covariate x = bwt = body weight
 
@@ -13,9 +16,9 @@ attach(sleeptab) # this way you can access the variables by name
 head(sleeptab)
 
 # 1.1
-#png("figures/Ex1_1.png")
+if (savePlots) png("figures/Ex1_1.png")
 plot(bwt, brwt)
-#dev.off()
+dev.off()
 
 # 1.2
 tooLarge <- which(brwt>1000)
@@ -24,9 +27,9 @@ Species_of_animal[tooLarge]
 brwt[tooLarge]
 # 5712 4603 1320
 
-#png("figures/Ex1_2.png")
+if (savePlots) png("figures/Ex1_2.png")
 plot(bwt[-tooLarge], brwt[-tooLarge])
-#dev.off()
+dev.off()
 # Very linear for the smallest values, but less so for the largest.
 # An increase in body weight does seem to increase the brain weight.
 
@@ -62,8 +65,20 @@ cat("Manual calc: \n", b0, b1,
 # weight would lead, in average, to a 96 grams increase of brain weight.
 
 # Exercise 2 ----
+# You may use the predict() function
+# 2.1 
+if (savePlots) png("figures/Ex2_1.png")
+plot(sleepModel$residuals)
+abline(h=0, col = "red")
+dev.off()
+sleepModel$residuals[abs(sleepModel$residuals)>500]
 
+# Estimation for later
+x0 <- seq(min(bwt), max(bwt), length = 100) 
+E0 <- predict(sleepModel, newdata = data.frame(bwt = x0))
 
-
-
-
+# now produce plots of the estimated m2, by predicting from a grid of x0 values defined as below
+# estimate E(y) according to x0
+E0 <- predict(sleepModel, newdata = data.frame(bwt = x0))  # estimated expected distance using model m2 based on speed set at x0 
+# add the predictions we have just obtained to the plot with data
+lines(x0, E0, col = "red")  # add regression curve (colour: red)

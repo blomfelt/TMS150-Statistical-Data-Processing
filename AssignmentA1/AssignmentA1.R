@@ -72,6 +72,24 @@ plot(sleepModel$residuals)
 abline(h=0, col = "red")
 dev.off()
 sleepModel$residuals[abs(sleepModel$residuals)>500]
+#         1         5        34 
+# -810.0712 2050.3294 1169.0728 
+# The same three as before
+
+# 2.2
+logBwt <- log(bwt)
+logBrwt <- log(brwt)
+
+if (savePlots) png("figures/Ex2_2.png")
+plot(logBwt, logBrwt)
+dev.off()
+
+logSleepModel <- lm(logBrwt~logBwt)
+
+if (savePlots) png("figures/Ex2_2.png")
+plot(logBwt, logBrwt)
+abline(logSleepModel)
+dev.off()
 
 # Estimation for later
 x0 <- seq(min(bwt), max(bwt), length = 100) 

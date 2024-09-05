@@ -1,3 +1,13 @@
+# Mac-specific
 .DS_Store
 
+# Able to reconstruct if needed
 figures/
+
+# History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+.RDataTmp

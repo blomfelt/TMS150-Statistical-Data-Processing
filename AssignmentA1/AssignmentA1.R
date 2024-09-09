@@ -91,6 +91,25 @@ plot(logBwt, logBrwt)
 abline(logSleepModel)
 dev.off()
 
+# 2.3
+# Estimate the value of brain weight when the body weight is 1000 kg using both
+# the original model and the one from the transformed variables. Don't forget
+# to exponentiate the result. Also give the difference between them.
+# Comment on whether you think this is substantial. 
+
+#First model
+predict(sleepModel, newdata = data.frame(bwt=1000))
+# 1057.501 
+# Transformed model
+exp(predict(logSleepModel, newdata = data.frame(logBwt = log(1000))))
+# 1521.195 
+
+# 1521.195 - 1057.501 = 463.694
+# 463.694 / 1057.501 = 0.4384809
+
+# COMMENT TODO
+
+
 # Estimation for later
 x0 <- seq(min(bwt), max(bwt), length = 100) 
 E0 <- predict(sleepModel, newdata = data.frame(bwt = x0))

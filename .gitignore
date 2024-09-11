@@ -3,6 +3,7 @@
 
 # Able to reconstruct if needed
 figures/
+Rplots.pdf
 
 # History files
 .Rhistory

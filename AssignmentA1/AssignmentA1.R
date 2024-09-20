@@ -1,10 +1,10 @@
-rm(list=ls())
+rm(list = ls()); graphics.off(); cat("\014")
+
 setwd("~/Documents/RStudio/TMS150 - Stochastic Data Processing/AssignmentA1")
-#setwd("~/Documents/TMS150-Statistical-Data-Processing/AssignmentA1")
 
 # To save all plots change to TRUE
 savePlots <-  FALSE
-closePlots <- FALSE
+closePlots <- TRUE
 
 if(savePlots) closePlots <- TRUE
 
@@ -23,7 +23,7 @@ head(sleeptab)
 # Plot response v.s.covariate
 if (savePlots) png("figures/Ex1_1.png")
 plot(bwt, brwt, main = "Exercise 1.1")
-if (closePlots) if (closePlots) graphics.off()
+if (closePlots) graphics.off()
 
 # Identify which species the three outliers belong to
 tooLarge <- which(brwt>1000) # Get indexes of the extreme values
@@ -32,16 +32,15 @@ Species_of_animal[tooLarge]
 # "Africanelephant" "Asianelephant" "Man"
 brwt[tooLarge] # Brain weight in grams:
 # 5712 4603 1320
-# TODO: Check, elaborate?
 
 # 1.2
 # Plot reponse without the outliers
 if (savePlots) png("figures/Ex1_2.png")
-plot(bwt[-tooLarge], brwt[-tooLarge], main = "Exercise 1.2") #Exclude the indexes of the extreme values
+#Exclude the indexes of the extreme values
+plot(bwt[-tooLarge], brwt[-tooLarge], main = "Exercise 1.2") 
 if (closePlots) if (closePlots) graphics.off()
 # Very linear for the smallest values, but less so for the largest.
 # An increase in body weight does seem to increase the brain weight.
-# TODO: Check, elaborate?
 
 # 1.3 
 # Compute a linear fit by hand
@@ -70,7 +69,6 @@ cat("Exercise 1.3:",
 # We get the same result when doing it manually and using the function, 
 # which is good! 
 # BUT using the function seems exponentially easier the more variables you have
-# TODO: Check, elaborate?
 
 # 1.4 
 # Interpret the value b1. What can you say about it? And what does it help you 
@@ -79,7 +77,6 @@ cat("Exercise 1.3:",
 # The value b1 represent the slope, so an increase of 1 kg body weight correlate
 # with an increase of 0.97 g brwt. This means that an 100 kg increase in body
 # weight would lead, in average, to a 96 grams increase of brain weight.
-# TODO: Check, elaborate?
 
 # Exercise 2 ----
 # 2.1 
@@ -92,9 +89,6 @@ sleepModel$residuals[abs(sleepModel$residuals)>500]
 #         1         5        34 
 # -810.0712 2050.3294 1169.0728 
 # The same three as before
-# TODO: Check, elaborate?
-# [ ] Do you observe any extreme observation? 
-# [ ] Extreme by how much?
 
 # 2.2
 # Log-transform both variables, and plot them. Perform regression using the
@@ -111,8 +105,6 @@ if (savePlots) png("figures/Ex2_2.png")
 plot(logBwt, logBrwt, main = "Exercise 2.2")
 abline(logSleepModel)
 if (closePlots) graphics.off()
-# TODO: Check, elaborate?
-# [ ] Better, no? -> Better, yes!
 
 # 2.3
 # Estimate the value of brain weight when the body weight is 1000 kg using both
@@ -130,7 +122,8 @@ exp(predict(logSleepModel, newdata = data.frame(logBwt = log(1000))))
 # 1521.195 - 1057.501 = 463.694
 # 463.694 / 1057.501 = 0.4384809
 
-# TODO: Check, elaborate?
+# This is substantial, a variation of almost 44% of one of the values is very 
+# large, and indicate the two are very different
 
 
 # Exercise 3 ----
@@ -148,7 +141,7 @@ residualsManual <- brwt-predict(sleepModel, newdata = data.frame(bwt))
 # Use the formula for s, see above, to calculate it
 s <- sqrt(sum(residualsManual^2)/(n - 2))
 # 334.7198
-# TODO: elaborate? "The value of s is 334.7198."??
+
 
 # 3.2 
 # Calculate "by hand" the confidence interval of b0 and b1 using a confidence 
@@ -165,14 +158,6 @@ b1 <- sleepModel$coefficients[2]
 Interval_b0 <- b0 + t_alpha*s*sqrt(1/n + mean(bwt)^2 / sum((bwt-mean(bwt))^2))
 Interval_b1 <- b1 + t_alpha*s / sqrt(sum((bwt-mean(bwt))^2))
 
-# TODO: Choose one printer:
-confint(sleepModel, level = 0.9)
-#cat(Interval_b0, "\n", Interval_b1)
-cat("\n\nExercise 3.2:\n")
-cat("\t\t", "5%\t\t95%", 
-    "\n(Intercept)\t", Interval_b0[1], "\t", Interval_b0[2], 
-    "\nbwt\t\t", Interval_b1[1], "\t", Interval_b1[2], sep = '')
-
 cat("\n\nExercise 3.2:\n")
 cat(format(c(
   "", "5%", "95%", 
@@ -181,11 +166,6 @@ cat(format(c(
   "b1, manual", signif(Interval_b1, 7), 
   "b1, code", signif(confint(sleepModel, level = 0.90)[2,], 7)), 
   justify = 'right'), fill = 40)
-
-# TODO: 
-# [x] Calculate the confidence intervals by hand, with confidence limit 0.9.
-# [x] You may not use `confint`, but may check your results with this.
-# [ ] Add your concrete interpretation of such intervals.
 
 
 # Exercise 4 ----
@@ -232,15 +212,14 @@ confint_b1 <- data.frame("low"=0, "high"=0)
 
 for (N in 1:numEstimates) {
   # Create 62 error terms:
-  error <- rnorm(numObservations, mean = 0, sd = s^2) 
-  # [ ] Should s above be s^2?
+  error <- rnorm(numObservations, mean = 0, sd = s) 
   
   # Predict new brainweights using the existing body weights and the error terms
   brwt_new <- b0_old + b1_old*bwt + error
   newmodel <- lm(brwt_new ~ bwt)
   
   # Save the new parameters
-  b0_new[N] <- newmodel$coefficients[1] # Save them but just in case?
+  b0_new[N] <- newmodel$coefficients[1] # Save them, just in case
   b1_new[N] <- newmodel$coefficients[2]
   
   # Calculate the confidence intervals
@@ -252,11 +231,10 @@ for (N in 1:numEstimates) {
 # the statements are both true and sum to 2.
 includes_b0 <- sum((b0_old > confint_b0$low) + (b0_old < confint_b0$high)==2)
 includes_b1 <- sum((b1_old > confint_b1$low) + (b1_old < confint_b1$high)==2)
+
 cat("\nExercise 4:")
 cat("\nThe proportion of intervals which include b0_old is", includes_b0/N)
 cat("\nThe proportion of intervals which include b1_old is", includes_b1/N)
 
-
+# END
 detach(sleeptab)
-
-

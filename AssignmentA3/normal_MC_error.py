@@ -37,15 +37,12 @@ for m in range(int(sample_size[N-1])):
             
 print(error_av)
 
-# %%
 # Plotting of the error
 plt.loglog(sample_size, error_av)
 plt.savefig('figures/error.png')
 
 plt.loglog(sample_size,1/np.sqrt(sample_size))
 
-# %%
 # Save figure as pdf file with better quality
 plt.savefig('normal_error.pdf')
-# %%
 

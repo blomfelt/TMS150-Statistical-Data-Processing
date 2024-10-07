@@ -17,7 +17,7 @@ start_time = time.time()
 
 M = np.array([2**i for i in range(1, 21)])
 #M = np.array([2**i for i in range(1, 11)])
-N = 1000
+N = 10
 
 # Allocate empty vectors
 hat_theta_MC = np.zeros([len(M), N])
@@ -36,7 +36,7 @@ for i in range(len(M)):
     # Save in array using theta_MC[index] = value?
 
     
-    for j in range(N): #TODO: why N-1? 
+    for j in range(N): 
         # CRUDE MC
         # Set initial theta
         theta = 0

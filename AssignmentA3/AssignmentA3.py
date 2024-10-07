@@ -218,7 +218,7 @@ error_MC = abs(hat_theta_MC - known_theta)
 error_HM = abs(hat_theta_HM - known_theta)
 
 # Plot al three lines
-figure()
+plt.figure()
 plt.loglog(M, error_MC, label = "Crude MC")
 plt.loglog(M, error_HM, label = "Hit-or-Miss")
 plt.loglog(M, 1/np.sqrt(M), label = "1/sqrt(M)")

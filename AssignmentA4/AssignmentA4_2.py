@@ -1,11 +1,9 @@
 # QUESTION 2
-#New
-import math
-#Old
 import random
 import numpy as np
 import matplotlib.pyplot as plt
-#import time 
+import time 
+start_time = time.time()
 
 # Create h:
 h = np.array([2**-i for i in range(10, 0, -1)])
@@ -46,13 +44,13 @@ for i in range(len(h)):
 
     X_level = np.zeros(level_size+1)
     X_level[0] = 1
-    if i != 10:
-        for x in range(1, level_size+1):
-            X_level[x] = (1+h[i]*mu)*X_level[x-1] + sigma*X_level[x-1]*(W_level[x] - W_level[x-1])
-            #print((1+h[i-1]*mu)*X_level[x-1] + sigma*X_level[x-1]*(W_level[x] - W_level[x-1]))
-        print("X_level:")
-        print(X_level)
-        plt.plot(timesteps_level, X_level)
+    #if i != 10:
+    for x in range(1, level_size+1):
+        X_level[x] = (1+h[i]*mu)*X_level[x-1] + sigma*X_level[x-1]*(W_level[x] - W_level[x-1])
+        #print((1+h[i-1]*mu)*X_level[x-1] + sigma*X_level[x-1]*(W_level[x] - W_level[x-1]))
+    print("X_level:")
+    print(X_level)
+    plt.plot(timesteps_level, X_level)
         #if (i == 3) | (i == 4):
         #    print("\nX_level")
         #    print((1+h[i-1]*mu)*X_level[x-1] + sigma*X_level[x-1]*(W_level[x] - W_level[x-1]))
@@ -71,4 +69,4 @@ plt.savefig("figures/q2.png")
 
 
 
-print("DONE")
+print("DONE in %.2f seconds" % (time.time() - start_time))

@@ -1,7 +1,9 @@
 import random
 import numpy as np
 import matplotlib.pyplot as plt
-#import time 
+import time 
+
+start_time = time.time()
 
 # Create h:
 h = np.array([2**-i for i in range(1, 11)])
@@ -59,6 +61,7 @@ print("DONE")
 print(W_level)
 
 
+print("DONE in %.2f seconds" % (time.time() - start_time))
 
 exit()
 for i in range(len(h)):
@@ -68,3 +71,5 @@ for i in range(len(h)):
     t = np.array([n*h[i] for n in range(N+1)])
     #print("\nt = " + str(t))
     #for time_next in t 
+
+

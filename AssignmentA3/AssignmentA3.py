@@ -261,7 +261,7 @@ random.seed(321)
 for i in range(len(M)):
     # Do the same as above for MC and HM.
 
-    for j in range(N): #TODO: why N-1? 
+    for j in range(N): 
         # CRUDE MC
         # Set initial theta
         theta = 0

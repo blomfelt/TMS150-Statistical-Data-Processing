@@ -8,22 +8,13 @@ start_time = time.time()
 # Create h:
 h = np.array([2**-i for i in range(1, 11)])
 number_steps = int(1/min(h))
-#print(h)
 
 # Generate all eta:s for the smallest level
 eta_finest = np.zeros(number_steps)
 random.seed("felix")
 for e in range(number_steps):
-    eta_finest[e] = random.gauss(0, min(h))
-# Generate all timesteps for the finest level:
-#timesteps = np.array([n/number_steps for n in range(number_steps+1)])
-
-# Create finest level
-#W = np.zeros(number_steps+1)
-#for n in range(1, number_steps):
-#    W[n] = W[n-1] + eta_finest[n-1]
-#plt.plot(timesteps, W)
-
+    # Normal distribution, give it sigma not sigma^2
+    eta_finest[e] = random.gauss(0, np.sqrt(min(h)))
 
 #Init loop
 eta_previous = eta_finest
@@ -44,32 +35,14 @@ for i in range(len(h)):
         W_level[i] = W_level[i-1] + eta_next[i-1]
     plt.plot(timesteps_level, W_level)
 
+    # Prepare for next loop
     eta_previous = eta_next
 
-#TODO: Add title
-plt.title("")
+#Plot it and save it
+plt.title("Question 1")
+plt.xlabel("t")
+plt.ylabel("W(t)")
 plt.savefig("figures/q1.png")
 
 
-print("DONE")
-#print("Finest")
-#print(eta_finest)
-#print("Next")
-#print(eta_next)
-
-
-print(W_level)
-
-
 print("DONE in %.2f seconds" % (time.time() - start_time))
-
-exit()
-for i in range(len(h)):
-    N = int(1/h[i])
-    # Lenght N+1 since there is N time steps in it, and 0 is start 
-    t = np.zeros(N+1)
-    t = np.array([n*h[i] for n in range(N+1)])
-    #print("\nt = " + str(t))
-    #for time_next in t 
-
-

@@ -25,7 +25,7 @@ m = 1000
 theta = 0
 
 # Set seed
-random.seed(321) #TODO: Correct?
+random.seed(321) 
 
 for k in range(m-1):
     # Generate u ~ U(0, 1)
@@ -236,7 +236,7 @@ plt.savefig("figures/q5.png")
 # Question 6
 # Let f and theta be as in question 1.
 # In order to estimate the root mean squared error, use another Monte Carlo 
-# estimate with N = 10, i.e. compute (TODO:)
+# estimate with N = 10, i.e. compute
 # Observe that you need to use one more loop over N, in addition to the one 
 # over M as you have done in Question 5. 
 # Plot your results in a similar way as in the previous task. 

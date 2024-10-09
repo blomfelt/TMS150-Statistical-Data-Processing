@@ -6,6 +6,8 @@ import time
 # QUESTION 1
 
 start_time = time.time()
+plt.figure()
+
 # Create h:
 h = np.array([2**-i for i in range(1, 11)])
 number_steps = int(1/min(h))
@@ -53,6 +55,7 @@ print("DONE Q1 in %.2f seconds" % (time.time() - start_time))
 
 # QUESTION 2
 start_time = time.time()
+plt.figure()
 
 # Create h:
 h = np.array([2**-i for i in range(10, 0, -1)])
@@ -99,7 +102,6 @@ for i in range(len(h)):
     # Start at 0 since W(0) = 0, up to level size +1 since non-inclusive range
     for j in range(1, level_size+1): 
         W_level[j] = W_level[j-1] + eta_next[j-1]
-    #plt.plot(timesteps_level, W_level)
     
     # Create empty array and set X(0) to the correct value
     X_level = np.zeros(level_size+1)
@@ -129,6 +131,7 @@ print("DONE Q2 in %.2f seconds" % (time.time() - start_time))
 
 # QUESTION 3
 start_time = time.time()
+plt.figure()
 
 # Create h:
 h = np.array([2**-i for i in range(10, 0, -1)])
@@ -211,6 +214,7 @@ print("DONE Q3 in %.2f seconds" % (time.time() - start_time))
 
 # QUESTION 4
 start_time = time.time()
+plt.figure()
 
 # Create h:
 h = np.array([2**-i for i in range(10, 0, -1)])
@@ -299,6 +303,7 @@ print("DONE Q4 in %.2f seconds" % (time.time() - start_time))
 
 # QUESTION 5
 start_time = time.time()
+plt.figure()
 
 # Create h:
 h = np.array([2**-i for i in range(10, 0, -1)])

@@ -25,7 +25,7 @@ m = 1000
 theta = 0
 
 # Set seed
-random.seed(321) #TODO: Correct?
+random.seed(321) 
 
 for k in range(m-1):
     # Generate u ~ U(0, 1)
@@ -218,7 +218,7 @@ error_MC = abs(hat_theta_MC - known_theta)
 error_HM = abs(hat_theta_HM - known_theta)
 
 # Plot al three lines
-figure()
+plt.figure()
 plt.loglog(M, error_MC, label = "Crude MC")
 plt.loglog(M, error_HM, label = "Hit-or-Miss")
 plt.loglog(M, 1/np.sqrt(M), label = "1/sqrt(M)")
@@ -236,7 +236,7 @@ plt.savefig("figures/q5.png")
 # Question 6
 # Let f and theta be as in question 1.
 # In order to estimate the root mean squared error, use another Monte Carlo 
-# estimate with N = 10, i.e. compute (TODO:)
+# estimate with N = 10, i.e. compute
 # Observe that you need to use one more loop over N, in addition to the one 
 # over M as you have done in Question 5. 
 # Plot your results in a similar way as in the previous task. 
@@ -261,7 +261,7 @@ random.seed(321)
 for i in range(len(M)):
     # Do the same as above for MC and HM.
 
-    for j in range(N): #TODO: why N-1? 
+    for j in range(N): 
         # CRUDE MC
         # Set initial theta
         theta = 0

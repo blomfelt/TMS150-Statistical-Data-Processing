@@ -135,7 +135,7 @@ ggplot(plot_df, aes(x = Theta, y = Utility)) +
        y = "Expected Utility")
 ggsave("figures/q2.png")
 
-# Question 3 ----
+# Question 3a ----
 # Read in the data:
 successes <- read_csv("successful.txt", col_names = FALSE)
 unsuccesses <- read_csv("unsuccessful.txt", col_names = FALSE)
@@ -145,14 +145,14 @@ unsuccess_df <- tibble(x = unsuccesses$X1, success = 0)
 # Combine to one dataframe
 data_df <- bind_rows(success_df, unsuccess_df)
 
-# Define funtion 15
+# Define function 15
 p <- function(x, mu, gamma){
   exp((x-mu)*exp(-gamma))/(1+exp((x-mu)*exp(-gamma)))
 }
 
 data_df <- data_df %>%
   mutate(mu_10_gamma_1 = p(x, 10, 1),
-         mu_5_gamma_1 = p(x, 5, 1),
+         mu_5_gamma_1  = p(x, 5, 1),
          mu_15_gamma_1 = p(x, 15, 1),
          mu_20_gamma_1 = p(x, 20, 1),
          mu_10_gamma_2 = p(x, 10, 2),
@@ -176,3 +176,45 @@ ggsave("figures/q3a.png")
 # Gamma should be around 1, certainly not 2, not as small as 0
 # Mu should be somewhere between 10 and 15, gamma = 5 does not mat probability for the lower x:es, 
 # and gamma = 20 does not match the middle ones. 
+
+
+# Question 3b ----
+# Since mu and gamma have flat priors, their log-prior is a constant which can 
+# be ignored when computing the posterior
+# Posterior is proportional to likelihood * prior, and prior is constant -> 
+# -> log of posterior is just log-likelihood
+# AND: The logarithm of a product is equal to a sum of logarithms
+# May sum the log() of each value (x?)
+
+# Same probability function as before
+p <- function(x, mu, gamma){
+  exp((x-mu)*exp(-gamma))/(1+exp((x-mu)*exp(-gamma)))
+}
+
+logpost <- function(mu, gamma, x, success){
+  # Success = 1 or 0 for each x
+  
+  # Calculate the prob of success
+  p_success <- p(x, mu, gamma)
+  
+  # Log likelihood of dataset
+  # log(p) for successes, and log(1-p) for unsucceses
+  log_likelihood <- success * log(p_success) + (1 - success) * log(1 - p_success)
+  
+  # Posterior is proportional to likelihood * prior, and prior is constant -> 
+  # -> log of posterior is just log-likelihood
+  return(sum(log_likelihood))
+  # Sum of log = log of product
+}
+
+# Test using data from before
+successes <- read_csv("successful.txt", col_names = FALSE)
+unsuccesses <- read_csv("unsuccessful.txt", col_names = FALSE)
+# Assign correct Z value
+success_df <- tibble("x" = successes$X1, success = 1)
+unsuccess_df <- tibble(x = unsuccesses$X1, success = 0)
+# Combine to one dataframe
+data_df <- bind_rows(success_df, unsuccess_df)
+
+# Print logpost of the chosen mu and gamma
+cat("\nLogpost, mu = 15, gamma = 1\n",logpost(15, 1, data_df$x, data_df$success))

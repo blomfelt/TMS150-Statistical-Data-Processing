@@ -3,6 +3,8 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 import time 
+
+plt.figure()
 start_time = time.time()
 
 # Create h:
@@ -25,6 +27,7 @@ W = {}
 timesteps = {}
 # Manually create the first/finest level
 W[0] = np.concatenate(([0], np.cumsum(eta_finest)))
+# Create timesteps from 0 to 1 i.e. grid size + 1
 timesteps[0] = np.array([n*h[0] for n in range(int(1/h[0]+1))])
 
 # Generate all other levels of the grid, starting from the second finest
@@ -60,7 +63,8 @@ for i in range(len(W)):
     X_level[0] = 1
     # Loop over all values and calculate approximation
     for n in range(1, level_size):
-        X_level[n] = (1 + h_level * mu) * X_level[n-1] + sigma * X_level[n-1] * (W_level[n] - W_level[n-1])
+        X_level[n] = ( (1 + h_level * mu) * X_level[n-1] + 
+            sigma * X_level[n-1] * (W_level[n] - W_level[n-1]) )
     # Save current level
     X_all[i] = X_level
 
@@ -76,3 +80,5 @@ plt.legend()
 plt.savefig("figures/q2.png")
 
 print("DONE in %.2f seconds" % (time.time() - start_time))
+
+plt.show()

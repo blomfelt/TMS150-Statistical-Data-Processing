@@ -271,7 +271,12 @@ for i in range(len(M)):
             # Calculate new value and add to old
             theta += 0.5*(u**5 + u**3)
         hat_theta_MC[i, j] = theta/M[i]
-    
+
+
+for i in range(len(M)):
+    # Do the same as above for MC and HM.
+
+    for j in range(N): 
         # HIT-OR-MISS
         count = 0
     
@@ -286,13 +291,13 @@ for i in range(len(M)):
         #print("Done with N = " + str(j) + ", M = " + str(M[i]))
 
 #Sum each row, each difference between computed and analytical, using M samples
-sum_rows_mc = np.sum(hat_theta_MC - analytical_theta, axis = 1)
+sum_rows_mc = np.sum((hat_theta_MC - analytical_theta)**2, axis = 1)
 # Calculate the RMSE for each M
-for_each_M_mc = np.sqrt((abs(sum_rows_mc)**2)/N)
+for_each_M_mc = np.sqrt(sum_rows_mc/N)
 
 #Do the same for HM
-sum_rows_hm = np.sum(hat_theta_HM - analytical_theta, axis = 1)
-for_each_M_hm = np.sqrt((abs(sum_rows_hm)**2)/N)
+sum_rows_hm = np.sum((hat_theta_HM - analytical_theta)**2, axis = 1)
+for_each_M_hm = np.sqrt(sum_rows_hm/N)
 
 # Plot all three lines
 plt.figure()

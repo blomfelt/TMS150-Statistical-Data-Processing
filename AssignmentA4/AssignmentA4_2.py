@@ -26,7 +26,7 @@ for e in range(number_steps):
 W = {}
 timesteps = {}
 # Manually create the first/finest level
-W[0] = np.concatenate(([0], np.cumsum(eta_finest)))
+W[0] = np.append([0], np.cumsum(eta_finest))
 # Create timesteps from 0 to 1 i.e. grid size + 1
 timesteps[0] = np.array([n*h[0] for n in range(int(1/h[0]+1))])
 

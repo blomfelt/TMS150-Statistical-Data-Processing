@@ -76,9 +76,9 @@ for m in range(M):
 
 # Sum each column (each resolution) and divide by M
 x_h = sum(X_last)/M
-print(X_last)
-print(x_h)
-print(np.exp(0.5*mu))
+#print(X_last)
+#print(x_h)
+#print(np.exp(0.5*mu))
 # Obtain the weak errors, one for each resolution
 weak_errors = abs(np.exp(0.5*mu - sigma/8) - x_h)
 

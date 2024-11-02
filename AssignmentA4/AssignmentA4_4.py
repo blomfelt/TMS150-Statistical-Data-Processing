@@ -14,7 +14,7 @@ number_steps = int(1/min(h))
 #Define constants and create necessary empty arrays
 mu = 2
 sigma = 1
-M = 100000
+M = 1000
 X_last = np.zeros([M, len(h)])
 exp_X_1 = np.exp(mu)
 
